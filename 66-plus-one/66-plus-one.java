@@ -14,16 +14,9 @@ class Solution {
         }
         int c = 1;
         for(i=n-1 ; i>=0 ; i--){
-            //c = (digits[i]+c)/10;
-            if(digits[i]+c>9){
-                c =  1;
-                digits[i] = 0;
-            }
-            else{
-                digits[i] += c;
-                c = 0;
-            }
-            //digits[i] = (digits[i]+c)%10;
+            int prev = c;
+            c = (digits[i]+c)/10;
+            digits[i] = (digits[i]+prev)%10;
         }
         return digits;
     }
