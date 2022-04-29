@@ -1,10 +1,13 @@
 class Solution {
     public String countAndSay(int n) {
         String base = "1";
+        StringBuilder res;
+        int j;
+        
         if(n==1) return base;
         for(int i=2 ; i<=n ; i++){
-            int j=0;
-            String res = "";
+            j=0;
+            res = new StringBuilder();
             while(j<base.length()){
                 char num = base.charAt(j);
                 int count = 0;
@@ -12,9 +15,9 @@ class Solution {
                     count++;
                     j++;
                 }
-                res += String.valueOf(count)+num;
+                res.append(count).append(num);
             }
-            base = res;
+            base = res.toString();
         }
         return base;
     }
