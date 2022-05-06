@@ -9,11 +9,9 @@ class Solution {
             int wd[] = new int[26];
             int j;
             for(j=0 ; j<words[i].length() ; j++)
-                wd[words[i].charAt(j)-'a']++;
-            for(j=0 ; j<26 ; j++){
-                if(wd[j]>al[j]) break;
-            }
-            count += j==26? words[i].length() : 0;
+                if((++wd[words[i].charAt(j)-'a'])>al[words[i].charAt(j)-'a'])
+                    break;
+            count += j==words[i].length()? words[i].length() : 0;
         }
         return count;
     }
