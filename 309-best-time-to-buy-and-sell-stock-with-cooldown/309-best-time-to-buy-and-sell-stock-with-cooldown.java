@@ -1,22 +1,20 @@
 class Solution {
     public int maxProfit(int[] prices) {
+        int n = prices.length;
+        if(n<=0) return 0;
+        int s0[] = new int[n];
+        int s1[] = new int[n];
+        int s2[] = new int[n];
+        s0[0] = 0;          //no stock
+        s1[0] = -prices[0];  //inhand
+        s2[0] = 0;           //sold
         
-        int dp[][] = new int[2][prices.length];
-        Arrays.fill(dp[0], -1);
-        Arrays.fill(dp[1], -1);
-            
-        return helper(0, 1, prices, dp);
-    }
-    
-    public int helper(int i, int buying, int p[], int dp[][]){
-        if(i>=p.length) return 0;
-        if(dp[buying][i]!=-1) return dp[buying][i];
-        
-        int cooldown = helper(i+1, buying, p, dp);
-        if(buying==1){
-            return dp[buying][i] = Math.max(helper(i+1, 1^buying, p, dp)-p[i],
-                                            cooldown);
+        for(int i=1 ; i<n ; i++){
+            s0[i] = Math.max(s0[i-1], s2[i-1]);
+            s1[i] = Math.max(s1[i-1], s0[i-1]-prices[i]);
+            s2[i] = s1[i] + prices[i];
         }
-        return dp[buying][i] = Math.max(helper(i+2, 1^buying, p, dp)+p[i], cooldown);
+            
+        return Math.max(s2[n-1], s0[n-1]);
     }
 }
