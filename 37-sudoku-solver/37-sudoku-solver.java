@@ -3,7 +3,7 @@ class Solution {
         solve(board, 0);
     }
     public boolean solve(char[][] b, int i){
-        for(int x=0 ; x<b.length ; x++){
+        for(int x=i ; x<b.length ; x++){
             for(int y=0 ; y<b[0].length ; y++){
                 if(b[x][y]=='.'){
                     for(char c='1' ; c<='9' ; c++){
