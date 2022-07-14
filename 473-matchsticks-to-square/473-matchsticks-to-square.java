@@ -1,34 +1,32 @@
 class Solution {
     public boolean makesquare(int[] matchsticks) {
-        int total = 0;
-        for (int i : matchsticks)
-            total += i;
+        int n = matchsticks.length;
+        boolean vis[] = new boolean[n];
+        int sum = 0;
+        for(int length : matchsticks)
+            sum += length;
+        if(sum % 4 != 0)
+            return false;
         
-        if (total % 4 != 0) return false;
-        Arrays.sort(matchsticks); 
-        return match(matchsticks, matchsticks.length - 1, 0, 0, 0, 0, total / 4);
+        return helper(0, n, 0, matchsticks, 0, sum/4, vis);
     }
     
-    public boolean match(int[] matchsticks, int index, int top, 
-                         int bottom, int left, int right, int target) {
+    public boolean helper(int idx, int n, int k, int[] m, int curSum, int sum,
+                          boolean[] vis){
         
-        if (top == target && bottom == target && left == target && right == target)
-            return true;
-
-        if (top > target || bottom > target || left > target || right > target)
-            return false;
-                        
-        int val = matchsticks[index];
+        if(curSum == sum){
+            k++;
+            if(k==4) return true;
+            return helper(0, n, k, m, 0, sum, vis);
+        }
         
-        boolean t = match(matchsticks, index - 1, top + val, bottom, left, right, target);
-        if (t) return true;
-        boolean b = match(matchsticks, index - 1, top, bottom + val, left, right, target);
-        if (b) return true;
-        boolean l = match(matchsticks, index - 1, top, bottom, left + val, right, target);
-        if (l) return true;
-        boolean r = match(matchsticks, index - 1, top, bottom, left, right + val, target);
-        if (r) return true;
-        
+        for(int i=idx ; i<n ; i++){
+            if(vis[i] || curSum+m[i]>sum) continue;
+            vis[i] = true;
+            if(helper(i+1, n, k, m, curSum+m[i], sum, vis))
+                return true;
+            vis[i] = false;
+        }
         return false;
     }
 }
