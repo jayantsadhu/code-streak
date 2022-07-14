@@ -16,12 +16,13 @@ class Solution {
         
         if(curSum == sum){
             k++;
-            if(k==4) return true;
+            if(k==3) return true;
             return helper(0, n, k, m, 0, sum, vis);
         }
         
         for(int i=idx ; i<n ; i++){
-            if(vis[i] || curSum+m[i]>sum) continue;
+            if(vis[i] || curSum+m[i]>sum)
+                continue;
             vis[i] = true;
             if(helper(i+1, n, k, m, curSum+m[i], sum, vis))
                 return true;
